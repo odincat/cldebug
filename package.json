@@ -1,0 +1,13 @@
+{
+  "name": "cldebug",
+  "version": "2.0.0",
+  "repository": "odincat/cldebug",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  }
+}
