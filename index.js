@@ -1,10 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initClDebug = exports.isClDebugEnabled = void 0;
-exports.isClDebugEnabled = false;
+exports.initClDebug = exports.isProduction = void 0;
+exports.isProduction = false;
+/**
+ * @deprecated Use cLog.initialize() insstead
+ */
 function initClDebug() {
-    if (!exports.isClDebugEnabled) {
-        exports.isClDebugEnabled = true;
+    if (!exports.isProduction) {
+        exports.isProduction = true;
     }
 }
 exports.initClDebug = initClDebug;
@@ -12,7 +15,15 @@ exports.initClDebug = initClDebug;
  * Logs something to console.
  */
 function cLog(type, message, expectedbehavior) {
-    if (exports.isClDebugEnabled) {
+    function isInitialized() {
+        return exports.isProduction;
+    }
+    function initialize() {
+        if (!exports.isProduction) {
+            exports.isProduction = true;
+        }
+    }
+    if (exports.isProduction) {
         var prefix = '';
         var format = '';
         switch (type) {
@@ -30,6 +41,20 @@ function cLog(type, message, expectedbehavior) {
                 prefix = '✗ There was an error: ';
                 format = 'font-size: 17px; color: #DA0037;';
                 break;
+            case 'throwerror':
+            case 'throwe':
+            case 'terr':
+            case 'te':
+            case 'e!':
+                prefix = '✗ There was an error: ';
+                format = 'font-size: 17px; color: #DA0037;';
+                if (expectedbehavior == null) {
+                    console.error('%c ' + prefix + message, format);
+                }
+                else {
+                    console.error('%c ' + prefix + message + ' → (' + expectedbehavior + ')', format);
+                }
+                return;
             case 'sucess':
             case 'suc':
             case 'su':

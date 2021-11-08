@@ -1,8 +1,11 @@
-export var isClDebugEnabled:boolean = false;
+export var isProduction:boolean = false;
 
+/**
+ * @deprecated Use cLog.initialize() insstead
+ */
 export function initClDebug() {
-    if(!isClDebugEnabled) {
-        isClDebugEnabled = true;
+    if(!isProduction) {
+        isProduction = true;
     }
 }
 
@@ -10,7 +13,18 @@ export function initClDebug() {
  * Logs something to console.
  */
 export default function cLog(type:string, message:any, expectedbehavior?:any) {
-    if(isClDebugEnabled) {
+
+    function isInitialized () {
+        return isProduction;
+    }
+
+    function initialize () {
+        if(!isProduction) {
+            isProduction = true;
+        }
+    }
+
+    if(isProduction) {
         var prefix:string = '';
         var format:string = '';
     
@@ -30,6 +44,22 @@ export default function cLog(type:string, message:any, expectedbehavior?:any) {
                 prefix = '✗ There was an error: ';
                 format = 'font-size: 17px; color: #DA0037;';
             break;
+
+            case 'throwerror':
+            case 'throwe':
+            case 'terr':
+            case 'te':
+            case 'e!':
+
+            prefix = '✗ There was an error: ';
+            format = 'font-size: 17px; color: #DA0037;';
+
+            if(expectedbehavior == null) {
+                console.error('%c ' + prefix + message, format);
+            } else {
+                console.error('%c ' + prefix + message + ' → (' + expectedbehavior + ')', format);
+            }
+            return;
     
             case 'sucess':
             case 'suc':

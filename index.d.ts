@@ -1,4 +1,7 @@
-export declare var isClDebugEnabled: boolean;
+export declare var isProduction: boolean;
+/**
+ * @deprecated Use cLog.initialize() insstead
+ */
 export declare function initClDebug(): void;
 /**
  * Logs something to console.
