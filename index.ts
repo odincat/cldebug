@@ -1,28 +1,19 @@
 export var isProduction:boolean = false;
 
-/**
- * @deprecated Use cLog.initialize() insstead
- */
 export function initClDebug() {
     if(!isProduction) {
         isProduction = true;
     }
 }
 
+export function isInitialized() {
+    return isProduction;
+}
+
 /**
  * Logs something to console.
  */
 export default function cLog(type:string, message:any, expectedbehavior?:any) {
-
-    cLog.prototype.initialize = () => {
-        if(!isProduction) {
-            isProduction = true;
-        }
-    };
-
-    cLog.prototype.isInitialized = () => {
-        return isProduction;
-    }
 
     if(isProduction) {
         var prefix:string = '';

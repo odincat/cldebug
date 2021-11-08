@@ -1,8 +1,6 @@
 export declare var isProduction: boolean;
-/**
- * @deprecated Use cLog.initialize() insstead
- */
 export declare function initClDebug(): void;
+export declare function isInitialized(): boolean;
 /**
  * Logs something to console.
  */

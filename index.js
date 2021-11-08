@@ -1,28 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initClDebug = exports.isProduction = void 0;
+exports.isInitialized = exports.initClDebug = exports.isProduction = void 0;
 exports.isProduction = false;
-/**
- * @deprecated Use cLog.initialize() insstead
- */
 function initClDebug() {
     if (!exports.isProduction) {
         exports.isProduction = true;
     }
 }
 exports.initClDebug = initClDebug;
+function isInitialized() {
+    return exports.isProduction;
+}
+exports.isInitialized = isInitialized;
 /**
  * Logs something to console.
  */
 function cLog(type, message, expectedbehavior) {
-    cLog.prototype.initialize = function () {
-        if (!exports.isProduction) {
-            exports.isProduction = true;
-        }
-    };
-    cLog.prototype.isInitialized = function () {
-        return exports.isProduction;
-    };
     if (exports.isProduction) {
         var prefix = '';
         var format = '';
