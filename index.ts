@@ -14,14 +14,14 @@ export function initClDebug() {
  */
 export default function cLog(type:string, message:any, expectedbehavior?:any) {
 
-    function isInitialized () {
-        return isProduction;
-    }
-
-    function initialize () {
+    cLog.prototype.initialize = () => {
         if(!isProduction) {
             isProduction = true;
         }
+    };
+
+    cLog.prototype.isInitialized = () => {
+        return isProduction;
     }
 
     if(isProduction) {

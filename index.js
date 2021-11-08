@@ -15,14 +15,14 @@ exports.initClDebug = initClDebug;
  * Logs something to console.
  */
 function cLog(type, message, expectedbehavior) {
-    function isInitialized() {
-        return exports.isProduction;
-    }
-    function initialize() {
+    cLog.prototype.initialize = function () {
         if (!exports.isProduction) {
             exports.isProduction = true;
         }
-    }
+    };
+    cLog.prototype.isInitialized = function () {
+        return exports.isProduction;
+    };
     if (exports.isProduction) {
         var prefix = '';
         var format = '';
